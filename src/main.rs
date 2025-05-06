@@ -24,10 +24,6 @@ fn main() {
     // Loop
     for generation in 0..NUM_GENERATIONS {
         // Evaluate fitness
-        // for individual in population.iter_mut() {
-        //     let phenotype_buffer = render_genotype(&individual.genotype);
-        //     individual.fitness = calculate_mse(&phenotype_buffer, &target_buffer);
-        // }
         population.par_iter_mut().for_each(|individual| {
             let phenotype_buffer = render_genotype(&individual.genotype);
             individual.fitness = calculate_mse(&phenotype_buffer, &target_buffer);
