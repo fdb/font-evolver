@@ -22,6 +22,7 @@ fn main() {
         .collect();
 
     // Loop
+    let mut frame_index: u32 = 1;
     for generation in 0..NUM_GENERATIONS {
         // Evaluate fitness
         population.par_iter_mut().for_each(|individual| {
@@ -42,9 +43,10 @@ fn main() {
             let phenotype_buffer = render_genotype(&best_individual.genotype);
             save_buffer(
                 &phenotype_buffer,
-                &format!("results/best_{}.png", generation),
+                &format!("results/best_{:04}.png", frame_index),
             )
             .unwrap();
+            frame_index += 1;
         }
 
         // Create new generation
