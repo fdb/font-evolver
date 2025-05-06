@@ -4,7 +4,7 @@ use crate::{
 };
 use fontdue::{Font, FontSettings};
 use image::GrayImage;
-use std::{fs, io::Write};
+use std::fs;
 
 const RASTER_FONT_SIZE_RATIO: f32 = 0.75;
 
@@ -44,8 +44,8 @@ fn draw_line_bresenham(
             break;
         }
         let err2 = err * 2;
-        if err2 >= dy {
-            err += dy;
+        if err2 >= -dy {
+            err -= dy;
             x0 += sx;
         }
         if err2 <= dx {
