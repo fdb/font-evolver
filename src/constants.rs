@@ -1,7 +1,7 @@
 pub const MAX_COORD: i32 = 1000;
 pub const NUM_LINES: usize = 30;
 
-pub const RENDER_SIZE: u32 = 64;
+pub const RENDER_SIZE: u32 = 256;
 
 pub const POPULATION_SIZE: usize = 50;
 pub const NUM_GENERATIONS: usize = 15000;

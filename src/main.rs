@@ -1,6 +1,7 @@
 use constants::{ELITISM_COUNT, NUM_GENERATIONS, OUTPUT_EVERY, POPULATION_SIZE};
 use evolution::{crossover, mutate, tournament_selection};
 use genotype::{Genotype, Individual};
+use rayon::prelude::*;
 use render::{calculate_mse, render_genotype, render_target_glyph, save_buffer};
 use std::fs;
 
@@ -12,7 +13,7 @@ fn main() {
     let mut rng = rand::rng();
     fs::create_dir_all("results").expect("Failed to create results directory");
 
-    let target_buffer = render_target_glyph("fonts/NotoSans-Light.ttf", 'O').unwrap();
+    let target_buffer = render_target_glyph("fonts/NotoSans-Light.ttf", 'A').unwrap();
     render::save_buffer(&target_buffer, "results/_target.png").unwrap();
 
     // Initialize population
@@ -23,10 +24,14 @@ fn main() {
     // Loop
     for generation in 0..NUM_GENERATIONS {
         // Evaluate fitness
-        for individual in population.iter_mut() {
+        // for individual in population.iter_mut() {
+        //     let phenotype_buffer = render_genotype(&individual.genotype);
+        //     individual.fitness = calculate_mse(&phenotype_buffer, &target_buffer);
+        // }
+        population.par_iter_mut().for_each(|individual| {
             let phenotype_buffer = render_genotype(&individual.genotype);
             individual.fitness = calculate_mse(&phenotype_buffer, &target_buffer);
-        }
+        });
 
         // Sort population by fitness (lower is better)
         population.sort_by(|a, b| a.fitness.partial_cmp(&b.fitness).unwrap());
