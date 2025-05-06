@@ -1,0 +1,9 @@
+[package]
+name = "font-evolver"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+fontdue = "0.9.3"
+image = "0.25.6"
+rand = "0.9.1"
